@@ -2,7 +2,7 @@
 RaiseTech 24年11月度 最終課題Spring Boot RestAPIのCRUDアプリケーション
 
 ## 概要
-好きなミュージシャンをメモしておけるCRUDアプリです。  
+気になったミュージシャンを忘れないようにメモしておけるCRUDアプリです。  
 READ・CREATE・UPDATE・DELETE機能を実装予定。  
 
 
