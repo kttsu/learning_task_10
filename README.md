@@ -26,7 +26,7 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 | カラム名 | データ型 | NotNull | キー | 備考 |
 | ------------ | ------------- | ------------- | ------------- | ------------- |
 | id | int | NOT NULL | 主キー | ID、自動生成 |
-| schedule | VARCHAR(100)  ||| 日付、開催時間 |
-| name| VARCHAR(100) | NOT NULL | ユニーク | 行きたいライブの名前 |
+| schedule | VARCHAR(100)  ||| 開催日時 |
+| name | VARCHAR(100) | NOT NULL | ユニーク | 行きたいライブの名前 |
 | location | VARCHAR(100)  ||| 開催施設名 |
 
