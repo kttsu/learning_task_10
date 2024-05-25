@@ -14,3 +14,4 @@ public interface LiveMapper {
     void insert(Live live);
 
 }
+
