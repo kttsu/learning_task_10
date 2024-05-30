@@ -1,8 +1,8 @@
 package com.tsuchiya.live;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
+
+import java.util.Optional;
 
 
 @Mapper
@@ -13,5 +13,10 @@ public interface LiveMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Live live);
 
+    @Select("SELECT * FROM live WHERE id = #{id}")
+    Optional<Live> findById(Integer id);
+
+    @Update("UPDATE live SET schedule = #{schedule}, name = #{name}, location = #{location} WHERE id = #{id}")
+    void update(Live live);
 }
 
