@@ -8,13 +8,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@RequestMapping("/live")
 public class LiveController {
     private final LiveService liveService;
 
     public LiveController(LiveService liveService) {
         this.liveService = liveService;
     }
-
 
     @PostMapping("/live")
     public ResponseEntity<LiveResponse> insert(@RequestBody LiveRequest liveRequest, UriComponentsBuilder uriBuilder) {
@@ -23,5 +23,13 @@ public class LiveController {
         LiveResponse body = new LiveResponse("live created");
         return ResponseEntity.created(location).body(body);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<LiveResponse> update(@PathVariable("id") Integer id, @RequestBody LiveRequest liveRequest) {
+        liveService.update(id, liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
+        LiveResponse body = new LiveResponse("live updated");
+        return ResponseEntity.ok(body);
+    }
+
 }
 

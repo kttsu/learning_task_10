@@ -5,6 +5,22 @@ public class Live {
 
     private String schedule;
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     private String name;
 
     private String location;
@@ -41,6 +57,7 @@ public class Live {
     public String getName() {
         return name;
     }
+
 
     public String getLocation() {
         return location;
