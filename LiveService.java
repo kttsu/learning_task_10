@@ -24,6 +24,12 @@ public class LiveService {
 
     public void update(Integer id, String schedule, String name, String location) {
         Optional<Live> liveOptional = liveMapper.findById(id);
+        liveOptional.ifPresent(live -> {
+            live.setSchedule(schedule);
+            live.setName(name);
+            live.setLocation(location);
+            liveMapper.update(live);
+        });
     }
 }
 
