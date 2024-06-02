@@ -26,17 +26,9 @@ public class LiveController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<LiveResponse> update(@PathVariable("id") Integer id, @RequestBody LiveRequest liveRequest) {
-        try {
             liveService.update(id, liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
             LiveResponse body = new LiveResponse("live updated"); // リクエストが成功した場合、200で返す。
             return ResponseEntity.ok(body);
-        } catch (SameLiveDataException ex) {
-            LiveResponse body = new LiveResponse(ex.getMessage());
-            return ResponseEntity.status(400).body(body); // 重複の場合、400を返す。
-        } catch (LiveNotFoundException ex) {
-            LiveResponse body = new LiveResponse(ex.getMessage());
-            return ResponseEntity.status(404).body(body); // 対象のライブが見つからない場合、404を返す。
-        }
     }
 }
 
