@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // LiveNotFoundExceptionとSameLiveDataExceptionを処理するためのハンドラ。
+    // LiveNotFoundExceptionとDuplicateLiveDataExceptionを処理するためのハンドラ。
     @ExceptionHandler(LiveNotFoundException.class)
     public ResponseEntity<LiveResponse> handleLiveNotFoundException(LiveNotFoundException ex) {
         LiveResponse response = new LiveResponse(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(SameLiveDataException.class)
-    public ResponseEntity<LiveResponse> handleSameLiveDataException(SameLiveDataException ex) {
+    @ExceptionHandler(DuplicateLiveDataException.class)
+    public ResponseEntity<LiveResponse> handleDuplicateLiveDataException(DuplicateLiveDataException ex) {
         LiveResponse response = new LiveResponse(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
