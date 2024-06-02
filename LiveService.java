@@ -28,7 +28,7 @@ public class LiveService {
 
         // 既存のレコードと同じ場合は更新しない。
         if (liveMapper.isDuplicate(schedule, name, location, id)) {
-            throw new SameLiveDataException("Cannot update with the same data");
+            throw new DuplicateLiveDataException("Cannot update with the same data");
         }
 
         // ライブ情報が見つかった場合に更新処理を行う。
