@@ -24,12 +24,18 @@ public class LiveService {
 
     public void update(Integer id, String schedule, String name, String location) {
         Optional<Live> liveOptional = liveMapper.findById(id);
-        liveOptional.ifPresent(live -> {
-            live.setSchedule(schedule);
-            live.setName(name);
-            live.setLocation(location);
-            liveMapper.update(live);
-        });
+        Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That id live is not registered"));
+
+        // 既存のレコードと同じ場合は更新しない。
+        if (liveMapper.isDuplicate(schedule, name, location, id)) {
+            throw new DuplicateLiveDataException("Cannot update with the same data");
+        }
+
+        // ライブ情報が見つかった場合に更新処理を行う。
+        live.setSchedule(schedule);
+        live.setName(name);
+        live.setLocation(location);
+        liveMapper.update(live);
     }
 }
 

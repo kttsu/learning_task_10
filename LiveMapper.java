@@ -16,7 +16,10 @@ public interface LiveMapper {
     @Select("SELECT * FROM live WHERE id = #{id}")
     Optional<Live> findById(Integer id);
 
+    @Select("SELECT COUNT(*) > 0 FROM live WHERE schedule = #{schedule} AND name = #{name} AND location = #{location} AND id != #{id}")
+    boolean isDuplicate(String schedule, String name, String location, Integer id); // liveのレコードの重複チェックを行うためのMyBatisのSQLクエリ
+
     @Update("UPDATE live SET schedule = #{schedule}, name = #{name}, location = #{location} WHERE id = #{id}")
-    void update(Live live);
+    void update(Live live); // liveのレコードを更新するためのMyBatisのSQLクエリ
 }
 

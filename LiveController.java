@@ -26,10 +26,9 @@ public class LiveController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<LiveResponse> update(@PathVariable("id") Integer id, @RequestBody LiveRequest liveRequest) {
-        liveService.update(id, liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
-        LiveResponse body = new LiveResponse("live updated");
-        return ResponseEntity.ok(body);
+            liveService.update(id, liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
+            LiveResponse body = new LiveResponse("live updated"); // リクエストが成功した場合、200で返す。
+            return ResponseEntity.ok(body);
     }
-
 }
 
