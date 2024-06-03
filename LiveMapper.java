@@ -21,5 +21,8 @@ public interface LiveMapper {
 
     @Update("UPDATE live SET schedule = #{schedule}, name = #{name}, location = #{location} WHERE id = #{id}")
     void update(Live live); // liveのレコードを更新するためのMyBatisのSQLクエリ
+
+    @Delete("DELETE FROM live WHERE id = #{id}")
+    void delete(Integer id); // 指定されたIDのライブデータをデータベースから削除するためのメソッド
 }
 
