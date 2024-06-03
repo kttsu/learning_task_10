@@ -26,16 +26,22 @@ public class LiveService {
         Optional<Live> liveOptional = liveMapper.findById(id);
         Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That id live is not registered"));
 
-        // 既存のレコードと同じ場合は更新しない。
+        // 既存のレコードと同じ場合は更新しない
         if (liveMapper.isDuplicate(schedule, name, location, id)) {
             throw new DuplicateLiveDataException("Cannot update with the same data");
         }
 
-        // ライブ情報が見つかった場合に更新処理を行う。
+        // ライブ情報が見つかった場合に更新処理を行う
         live.setSchedule(schedule);
         live.setName(name);
         live.setLocation(location);
         liveMapper.update(live);
+    }
+
+    public void delete(Integer id) {
+        Optional<Live> liveOptional = liveMapper.findById(id);
+        Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That live id cannot be deleted"));
+        liveMapper.delete(id);
     }
 }
 
