@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/live")
@@ -29,6 +30,18 @@ public class LiveController {
         liveService.update(id, liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
         LiveResponse body = new LiveResponse("live updated"); // リクエストが成功した場合、200で返す。
         return ResponseEntity.ok(body);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Live> findById(@PathVariable Integer id) {
+        Live live = liveService.findById(id);
+        return ResponseEntity.ok(live);
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> findAll() {
+        List<Live> lives = liveService.findAll();
+        return ResponseEntity.ok(lives);
     }
 
     @DeleteMapping("/{id}")
