@@ -3,6 +3,7 @@ package com.tsuchiya.live;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +21,14 @@ public class LiveService {
         liveMapper.insert(live);
         return live;
 
+    }
+
+    public Live findById(Integer id) {
+        return liveMapper.findById(id).orElseThrow(() -> new LiveNotFoundException("Live not found"));
+    }
+
+    public List<Live> findAll() {
+        return liveMapper.findAll();
     }
 
     public void update(Integer id, String schedule, String name, String location) {
