@@ -39,7 +39,7 @@ public class LiveController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAll() {
+    public ResponseEntity<List<Live>> findAll() {
         List<Live> lives = liveService.findAll();
         return ResponseEntity.ok(lives);
     }
