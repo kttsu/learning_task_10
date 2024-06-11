@@ -31,12 +31,12 @@ class LiveServiceTest {
 
     @Test
     public void testFindAll_Service() {
-        Live live2 = new Live(2, "2024-6-6 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
-        Live live3 = new Live(3, "2024-9-24 19:00:00", "IRON MAIDEN", "大阪城ホール");
-        Live live4 = new Live(4, "2024-10-19 18:00:00", "JOURNEY", "Asueアリーナ大阪");
-        Live live5 = new Live(5, "2024-10-02 19:00:00", "RHAPSODY OF FIRE", "梅田クラブクアトロ");
+        Live live1 = new Live(1, "2024-6-6 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
+        Live live2 = new Live(2, "2024-9-24 19:00:00", "IRON MAIDEN", "大阪城ホール");
+        Live live3 = new Live(3, "2024-10-19 18:00:00", "JOURNEY", "Asueアリーナ大阪");
+        Live live4 = new Live(4, "2024-10-02 19:00:00", "RHAPSODY OF FIRE", "梅田クラブクアトロ");
 
-        List<Live> expected = Arrays.asList(live2, live3, live4, live5);
+        List<Live> expected = Arrays.asList(live1, live2, live3, live4);
         when(liveMapper.findAll()).thenReturn(expected);
 
         List<Live> actual = liveMapper.findAll();
