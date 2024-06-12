@@ -25,7 +25,7 @@ class LiveServiceTest {
 
 
     @Test
-    public void testFindAll_Service() {
+    public void 全てのliveを取得するテスト() {
         Live live1 = new Live(1, "2024-6-6 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
         Live live2 = new Live(2, "2024-9-24 19:00:00", "IRON MAIDEN", "大阪城ホール");
         Live live3 = new Live(3, "2024-10-19 18:00:00", "JOURNEY", "Asueアリーナ大阪");
@@ -41,7 +41,7 @@ class LiveServiceTest {
     }
 
     @Test
-    public void testFindById_Service() {
+    public void idでliveを取得するテスト() {
         int existingId = 1;
         Live expectedLive = new Live(existingId, "2024-06-06 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
         when(liveMapper.findById(existingId)).thenReturn(Optional.of(expectedLive));
@@ -52,7 +52,7 @@ class LiveServiceTest {
     }
 
     @Test
-    public void testFindById_Exception_Service() {
+    public void 存在しないidで例外が投げられることのテスト() {
         int nonExistingId = 6;
 
         when(liveMapper.findById(nonExistingId)).thenReturn(Optional.empty());
