@@ -24,11 +24,6 @@ class LiveServiceTest {
     private LiveMapper liveMapper;
 
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     public void testFindAll_Service() {
         Live live1 = new Live(1, "2024-6-6 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
