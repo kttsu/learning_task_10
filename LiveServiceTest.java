@@ -1,17 +1,17 @@
 package com.tsuchiya.live;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +38,26 @@ class LiveServiceTest {
 
         assertEquals(expected.size(), actual.size());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testFindById_Service() {
+        int existingId = 1;
+        Live expectedLive = new Live(existingId, "2024-06-06 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
+        when(liveMapper.findById(existingId)).thenReturn(Optional.of(expectedLive));
+
+        Live actualLive = liveService.findById(existingId);
+
+        assertEquals(expectedLive, actualLive);
+    }
+
+    @Test
+    public void testFindById_Exception_Service() {
+        int nonExistingId = 6;
+
+        when(liveMapper.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        assertThrows(LiveNotFoundException.class, () -> liveService.findById(nonExistingId));
     }
 }
 
