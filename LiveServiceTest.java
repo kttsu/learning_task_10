@@ -62,7 +62,7 @@ class LiveServiceTest {
 
     @Test
     public void liveを登録するテスト() {
-        Live liveToInsert = new Live("2024-06-06 19:00:00", "New Artist", "New Location");
+        Live liveToInsert = new Live("2024-12-06 19:00:00", "ジューダス・プリースト", "あましんアルカイックホール");
 
         doAnswer(invocation -> {
             Live live = invocation.getArgument(0);
