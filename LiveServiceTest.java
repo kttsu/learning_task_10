@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class LiveServiceTest {
@@ -58,6 +58,24 @@ class LiveServiceTest {
         when(liveMapper.findById(nonExistingId)).thenReturn(Optional.empty());
 
         assertThrows(LiveNotFoundException.class, () -> liveService.findById(nonExistingId));
+    }
+
+    @Test
+    public void liveを登録するテスト() {
+        Live liveToInsert = new Live("2024-06-06 19:00:00", "New Artist", "New Location");
+
+        doAnswer(invocation -> {
+            Live live = invocation.getArgument(0);
+            live.setId(1);
+            return null;
+        }).when(liveMapper).insert(any(Live.class));
+
+        Live insertedLive = liveService.insert(liveToInsert.getSchedule(), liveToInsert.getName(), liveToInsert.getLocation());
+
+        assertEquals(1, insertedLive.getId());
+        assertEquals(liveToInsert.getSchedule(), insertedLive.getSchedule());
+        assertEquals(liveToInsert.getName(), insertedLive.getName());
+        assertEquals(liveToInsert.getLocation(), insertedLive.getLocation());
     }
 }
 
