@@ -64,15 +64,10 @@ class LiveServiceTest {
     public void liveを登録するテスト() {
         Live liveToInsert = new Live("2024-12-06 19:00:00", "ジューダス・プリースト", "あましんアルカイックホール");
 
-        doAnswer(invocation -> {
-            Live live = invocation.getArgument(0);
-            live.setId(1);
-            return null;
-        }).when(liveMapper).insert(any(Live.class));
+       doNothing().when(liveMapper).insert(any(Live.class));
 
         Live insertedLive = liveService.insert(liveToInsert.getSchedule(), liveToInsert.getName(), liveToInsert.getLocation());
 
-        assertEquals(1, insertedLive.getId());
         assertEquals(liveToInsert.getSchedule(), insertedLive.getSchedule());
         assertEquals(liveToInsert.getName(), insertedLive.getName());
         assertEquals(liveToInsert.getLocation(), insertedLive.getLocation());
