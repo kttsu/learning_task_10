@@ -72,5 +72,28 @@ class LiveServiceTest {
         assertEquals(liveToInsert.getName(), insertedLive.getName());
         assertEquals(liveToInsert.getLocation(), insertedLive.getLocation());
     }
+
+    @Test
+    void liveを更新するテスト() {
+        int existingId = 1;
+        Live existingLive = new Live(existingId, "2024-06-06 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
+        Live liveToUpdate = new Live(existingId, "2024-11-21 19:00:00", "JPクーパー", "渋谷 WWW");
+
+        when(liveMapper.findById(existingId)).thenReturn(Optional.of(existingLive));
+        when(liveMapper.isDuplicate(liveToUpdate.getSchedule(), liveToUpdate.getName(), liveToUpdate.getLocation(), existingId)).thenReturn(false);
+
+        liveService.update(existingId, liveToUpdate.getSchedule(), liveToUpdate.getName(), liveToUpdate.getLocation());
+
+    }
+
+    @Test
+    void 存在しないidで更新すると例外が投げられるテスト() {
+        int nonExistentId = 6;
+        Live liveToUpdate = new Live(nonExistentId, "2024-11-21 19:00:00", "JPクーパー", "渋谷 WWW");
+
+        when(liveMapper.findById(nonExistentId)).thenReturn(Optional.empty());
+
+        assertThrows(LiveNotFoundException.class, () -> liveService.update(nonExistentId, liveToUpdate.getSchedule(), liveToUpdate.getName(), liveToUpdate.getLocation()));
+    }
 }
 
