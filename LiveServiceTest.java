@@ -74,7 +74,7 @@ class LiveServiceTest {
     }
 
     @Test
-    void ライブを更新するテスト() {
+    void liveを更新するテスト() {
         int existingId = 1;
         Live existingLive = new Live(existingId, "2024-06-06 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
         Live liveToUpdate = new Live(existingId, "2024-11-21 19:00:00", "JPクーパー", "渋谷 WWW");
