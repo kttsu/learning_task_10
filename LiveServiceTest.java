@@ -95,5 +95,26 @@ class LiveServiceTest {
 
         assertThrows(LiveNotFoundException.class, () -> liveService.update(nonExistentId, liveToUpdate.getSchedule(), liveToUpdate.getName(), liveToUpdate.getLocation()));
     }
+
+    @Test
+    void liveを削除するテスト() {
+        int existingId = 1;
+        Live existingLive = new Live(existingId, "2024-06-06 19:00:00", "PRAYING MANTIS", "梅田Club Quattro");
+
+        when(liveMapper.findById(existingId)).thenReturn(Optional.of(existingLive));
+
+        liveService.delete(existingId);
+    }
+
+    @Test
+    void 存在しないidを削除すると例外が投げられるテスト() {
+        int nonExistingId = 6;
+
+        when(liveMapper.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        assertThrows(LiveNotFoundException.class, () -> {
+            liveService.delete(nonExistingId);
+        });
+    }
 }
 
