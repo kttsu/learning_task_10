@@ -57,5 +57,35 @@ public class LiveRestApiIntegrationTest {
                         """
                 ));
     }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在するliveのidを取得するテスト() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/live/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""                  
+                           {
+                             "id": 1,
+                             "schedule": "2024-05-09 19:00:00",
+                             "name": "Yngwie J.Malmsteen",
+                             "location": "zepp namba"
+                           }
+                        """
+                ));
+    }
+
+    @Test
+    @Transactional
+    void 存在しないliveのidを指定したときに404エラーを返すテスト() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/live/5"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""                              
+                           {
+                             "message": "Live not found"
+                           }
+                        """
+                ));
+    }
 }
 

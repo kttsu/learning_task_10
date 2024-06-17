@@ -1,5 +1,7 @@
 package com.tsuchiya.live;
 
+import java.util.Objects;
+
 public class Live {
     private Integer id;
 
@@ -25,12 +27,14 @@ public class Live {
 
     private String location;
 
+
     public Live(Integer id, String schedule, String name, String location) {
         this.id = id;
         this.schedule = schedule;
         this.name = name;
         this.location = location;
     }
+
 
     public Live(String schedule, String name, String location) {
         this.id = null;
@@ -39,6 +43,7 @@ public class Live {
         this.location = location;
     }
 
+    
     public static Live createLive(String schedule, String name, String location) {
         return new Live(null, schedule, name, location);
 
@@ -63,5 +68,21 @@ public class Live {
         return location;
     }
 
+    // DBテスト用 equalsおよびhashCodeのメソッド
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Live live = (Live) o;
+        return Objects.equals(id, live.id) &&
+                Objects.equals(schedule, live.schedule) &&
+                Objects.equals(name, live.name) &&
+                Objects.equals(location, live.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, schedule, name, location);
+    }
 }
 
