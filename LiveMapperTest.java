@@ -24,14 +24,14 @@ public class LiveMapperTest {
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 全てのliveを取得するテスト() {
+    void 全てのliveを取得できること() {
         List<Live> live = liveMapper.findAll();
     }
 
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 存在するliveのidを取得するテスト() {
+    void 存在するliveのidを取得するできること() {
         Optional<Live> live = liveMapper.findById(1);
         assertThat(live).isPresent();
 
@@ -41,7 +41,7 @@ public class LiveMapperTest {
 
     @Test
     @Transactional
-    void 存在しないliveのidを指定した時にOptionalemptyが返されるテスト() {
+    void 存在しないliveのidを指定した時にOptionalemptyが返されること() {
         Optional<Live> live = liveMapper.findById(5);
         assertThat(live).isEmpty();
     }
