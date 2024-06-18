@@ -45,5 +45,13 @@ public class LiveMapperTest {
         Optional<Live> live = liveMapper.findById(5);
         assertThat(live).isEmpty();
     }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void liveを新規登録できること() {
+        Live live = new Live("2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
+        liveMapper.insert(live);
+    }
 }
 
