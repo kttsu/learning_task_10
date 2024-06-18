@@ -31,7 +31,7 @@ public class LiveMapperTest {
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 存在するliveのidを取得できること() {
+    void 存在するliveのidを指定して取得できること() {
         Optional<Live> live = liveMapper.findById(1);
         assertThat(live).isPresent();
 
