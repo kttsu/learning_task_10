@@ -9,6 +9,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DBRider
 @MybatisTest
@@ -21,8 +24,26 @@ public class LiveMapperTest {
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 全てのliveを取得するテスト() {
+    void 全てのliveを取得できること() {
         List<Live> live = liveMapper.findAll();
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在するliveのidを指定して取得できること() {
+        Optional<Live> live = liveMapper.findById(1);
+        assertThat(live).isPresent();
+
+        Live expectedLive = new Live(1, "2024-05-09 19:00:00", "Yngwie J.Malmsteen", "zepp namba");
+        assertThat(live.get()).isEqualTo(expectedLive);
+    }
+
+    @Test
+    @Transactional
+    void 存在しないliveのidを指定した時にOptionalemptyが返されること() {
+        Optional<Live> live = liveMapper.findById(5);
+        assertThat(live).isEmpty();
     }
 }
 
