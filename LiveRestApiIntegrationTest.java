@@ -12,6 +12,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @DBRider
@@ -26,8 +29,8 @@ public class LiveRestApiIntegrationTest {
     @Transactional
     void 全てのliveを取得できること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/live"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
                         [
                            {
                              "id": 1,
@@ -63,8 +66,8 @@ public class LiveRestApiIntegrationTest {
     @Transactional
     void 存在するliveのidを指定して取得できること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/live/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""                  
+                .andExpect(status().isOk())
+                .andExpect(content().json("""                  
                            {
                              "id": 1,
                              "schedule": "2024-05-09 19:00:00",
@@ -79,8 +82,8 @@ public class LiveRestApiIntegrationTest {
     @Transactional
     void 存在しないliveのidを指定したときに404エラーが返されること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/live/5"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().json("""                              
+                .andExpect(status().isNotFound())
+                .andExpect(content().json("""                              
                            {
                              "message": "Live not found"
                            }
