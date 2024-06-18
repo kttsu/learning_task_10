@@ -61,7 +61,7 @@ public class LiveRestApiIntegrationTest {
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 存在するliveのidを取得できること() throws Exception {
+    void 存在するliveのidを指定して取得できること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/live/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""                  
