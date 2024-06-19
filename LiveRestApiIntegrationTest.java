@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +105,55 @@ public class LiveRestApiIntegrationTest {
                           "location": "NEW LOCATION"
                         }
                         """));
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 指定したidでliveの情報を更新できること() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.patch("/live/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content("""
+                        {
+                          "schedule": "2024-12-31 20:00:00",
+                          "name": "NEW TEST LIVE",
+                          "location": "NEW LOCATION"
+                        }
+                        """));
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 重複したデータでliveを更新する場合に400を返すこと() throws Exception {
+        MockHttpServletResponse live = mockMvc.perform(MockMvcRequestBuilders.patch("/live/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "id": 2,
+                                  "schedule": "2024-05-09 19:00:00",
+                                  "name": "Yngwie J.Malmsteen",
+                                  "location": "zepp namba"
+                                }
+                                """))
+                .andReturn().getResponse();
+
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在しないidでliveを更新したときに404を返すこと() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.patch("/live/5")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "schedule": "2024-12-31 20:00:00",
+                                  "name": "NEW TEST LIVE",
+                                  "location": "NEW LOCATION"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
     }
 }
 

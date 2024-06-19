@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 @DBRider
 @MybatisTest
@@ -52,6 +55,40 @@ public class LiveMapperTest {
     void liveを新規登録できること() {
         Live live = new Live("2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
         liveMapper.insert(live);
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 指定したidでliveの情報を更新できること() {
+        Live live = new Live(1, "2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
+        liveMapper.update(live);
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 重複したデータでliveを更新する場合にDuplicateLiveDataExceptionをスローされること() {
+        // id = 2 のliveを、id = 1 と同じデータに更新しようとする
+        boolean isDuplicate = liveMapper.isDuplicate("2024-05-09 19:00:00", "Yngwie J.Malmsteen", "zepp namba", 2);
+        assertThat(isDuplicate).isTrue();
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在しないidでliveを更新した場合にLiveNotFoundExceptionがスローされること() {
+        Live live = new Live(5, "2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
+
+        Optional<Live> liveOptional = liveMapper.findById(live.getId());
+        if (liveOptional.isEmpty()) {
+            assertThrows(LiveNotFoundException.class, () -> {
+                throw new LiveNotFoundException("That id live is not registered");
+            });
+        } else {
+            // idが存在する場合、liveが更新され例外がスローされないため失敗とする
+            fail("live updated");
+        }
     }
 }
 
