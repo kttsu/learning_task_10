@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -89,6 +89,21 @@ public class LiveRestApiIntegrationTest {
                            }
                         """
                 ));
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void liveを新規登録できること() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/live")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "schedule": "2024-12-31 20:00:00",
+                          "name": "NEW TEST LIVE",
+                          "location": "NEW LOCATION"
+                        }
+                        """));
     }
 }
 
