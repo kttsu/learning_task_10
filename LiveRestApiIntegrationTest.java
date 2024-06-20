@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -137,17 +136,21 @@ public class LiveRestApiIntegrationTest {
     @DataSet(value = "datasets/live.yml")
     @Transactional
     void 重複したデータでliveを更新する場合に400を返すこと() throws Exception {
-        MockHttpServletResponse live = mockMvc.perform(MockMvcRequestBuilders.patch("/live/2")
-                        .contentType(MediaType.APPLICATION_JSON)
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.patch("/live/2")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content("""
                                 {
-                                  "id": 2,
                                   "schedule": "2024-05-09 19:00:00",
                                   "name": "Yngwie J.Malmsteen",
                                   "location": "zepp namba"
                                 }
                                 """))
+                .andExpect(status().isBadRequest())
                 .andReturn().getResponse();
+
+        // レスポンスの内容を文字列として取得し,エラーメッセージが含まれていることを確認
+        String jsonResponse = response.getContentAsString();
+        assertTrue(jsonResponse.contains("Cannot update with the same data"));
 
     }
 
