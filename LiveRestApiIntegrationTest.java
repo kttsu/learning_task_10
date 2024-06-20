@@ -1,6 +1,7 @@
 package com.tsuchiya.live;
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,7 @@ public class LiveRestApiIntegrationTest {
 
     @Test
     @DataSet(value = "datasets/live.yml")
+    @ExpectedDataSet(value = "datasets/expectedLiveDataAfterUpdate.yml", ignoreCols = "id")
     @Transactional
     void 指定したidでliveの情報を更新できること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch("/live/{id}", 1)
