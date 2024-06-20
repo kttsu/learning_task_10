@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -119,7 +120,17 @@ public class LiveRestApiIntegrationTest {
                           "name": "NEW TEST LIVE",
                           "location": "NEW LOCATION"
                         }
-                        """));
+                        """))
+        andExpect(status().isOk()) // HTTPステータスコードが200であることと更新成功メッセージを確認
+                .andExpect(jsonPath("$.message").value("live updated")); 
+
+        // 更新後のデータを確認するためにGETリクエストを送信
+        mockMvc.perform(MockMvcRequestBuilders.get("/live/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.schedule").value("2024-12-31 20:00:00"))
+                .andExpect(jsonPath("$.name").value("NEW TEST LIVE"))
+                .andExpect(jsonPath("$.location").value("NEW LOCATION"));
     }
 
     @Test
