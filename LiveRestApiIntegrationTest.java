@@ -194,7 +194,7 @@ public class LiveRestApiIntegrationTest {
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
-    void 存在しないliveのidを削除したとき404を返すこと() throws Exception {
+    void 存在しないliveのidを削除したとき404とメッセージを返すこと() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/live/6"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().json("""
