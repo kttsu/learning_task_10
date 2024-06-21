@@ -176,8 +176,9 @@ public class LiveRestApiIntegrationTest {
 
     @Test
     @DataSet(value = "datasets/live.yml")
+    @ExpectedDataSet(value = "datasets/expectedLiveDataAfterDelete.yml", ignoreCols = "id")
     @Transactional
-    void 存在するliveのidを指定して削除できること() throws Exception {
+    void 指定したidのliveがDBから削除されメッセージが返ること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/live/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
