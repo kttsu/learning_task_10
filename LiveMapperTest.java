@@ -71,5 +71,15 @@ public class LiveMapperTest {
         boolean isDuplicate = liveMapper.isDuplicate("2024-05-09 19:00:00", "Yngwie J.Malmsteen", "zepp namba", 2);
         assertThat(isDuplicate).isTrue();
     }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 指定したidでliveの情報を削除できること() {
+        Integer id = 1;
+        liveMapper.delete(id);
+
+        Optional<Live> liveOptional = liveMapper.findById(id);
+    }
 }
 
