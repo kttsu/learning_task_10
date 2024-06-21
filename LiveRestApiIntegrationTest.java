@@ -114,16 +114,16 @@ public class LiveRestApiIntegrationTest {
     @Transactional
     void 指定したidでliveの情報を更新できること() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch("/live/{id}", 1)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("""
-                        {
-                          "schedule": "2024-12-31 20:00:00",
-                          "name": "NEW TEST LIVE",
-                          "location": "NEW LOCATION"
-                        }
-                        """))
-        andExpect(status().isOk()) // HTTPステータスコードが200であることと更新成功メッセージを確認
-                .andExpect(jsonPath("$.message").value("live updated")); 
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                  "schedule": "2024-12-31 20:00:00",
+                                  "name": "NEW TEST LIVE",
+                                  "location": "NEW LOCATION"
+                                }
+                                """))
+                .andExpect(status().isOk()) // HTTPステータスコードが200であることと更新成功メッセージを確認
+                .andExpect(jsonPath("$.message").value("live updated"));
 
         // 更新後のデータを確認するためにGETリクエストを送信
         mockMvc.perform(MockMvcRequestBuilders.get("/live/{id}", 1))
