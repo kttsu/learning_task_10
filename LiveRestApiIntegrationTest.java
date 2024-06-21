@@ -1,6 +1,7 @@
 package com.tsuchiya.live;
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -104,6 +106,70 @@ public class LiveRestApiIntegrationTest {
                           "location": "NEW LOCATION"
                         }
                         """));
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @ExpectedDataSet(value = "datasets/expectedLiveDataAfterUpdate.yml", ignoreCols = "id")
+    @Transactional
+    void 指定したidでliveの情報を更新できること() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.patch("/live/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content("""
+                        {
+                          "schedule": "2024-12-31 20:00:00",
+                          "name": "NEW TEST LIVE",
+                          "location": "NEW LOCATION"
+                        }
+                        """))
+        andExpect(status().isOk()) // HTTPステータスコードが200であることと更新成功メッセージを確認
+                .andExpect(jsonPath("$.message").value("live updated")); 
+
+        // 更新後のデータを確認するためにGETリクエストを送信
+        mockMvc.perform(MockMvcRequestBuilders.get("/live/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.schedule").value("2024-12-31 20:00:00"))
+                .andExpect(jsonPath("$.name").value("NEW TEST LIVE"))
+                .andExpect(jsonPath("$.location").value("NEW LOCATION"));
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 重複したデータでliveを更新する場合に400を返すこと() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.patch("/live/2")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                  "schedule": "2024-05-09 19:00:00",
+                                  "name": "Yngwie J.Malmsteen",
+                                  "location": "zepp namba"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        // レスポンスの内容を文字列として取得し,エラーメッセージが含まれていることを確認
+        String jsonResponse = response.getContentAsString();
+        assertTrue(jsonResponse.contains("Cannot update with the same data"));
+
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在しないidでliveを更新したときに404を返すこと() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.patch("/live/5")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "schedule": "2024-12-31 20:00:00",
+                                  "name": "NEW TEST LIVE",
+                                  "location": "NEW LOCATION"
+                                }
+                                """))
+                .andExpect(status().isNotFound());
     }
 }
 

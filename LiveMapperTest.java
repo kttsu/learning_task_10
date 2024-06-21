@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @DBRider
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -52,6 +53,23 @@ public class LiveMapperTest {
     void liveを新規登録できること() {
         Live live = new Live("2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
         liveMapper.insert(live);
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 指定したidでliveの情報を更新できること() {
+        Live live = new Live(1, "2024-12-31 20:00:00", "NEW TEST LIVE", "NEW LOCATION");
+        liveMapper.update(live);
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 重複したデータでliveを更新する場合にDuplicateLiveDataExceptionをスローされること() {
+        // id = 2 のliveを、id = 1 と同じデータに更新しようとする
+        boolean isDuplicate = liveMapper.isDuplicate("2024-05-09 19:00:00", "Yngwie J.Malmsteen", "zepp namba", 2);
+        assertThat(isDuplicate).isTrue();
     }
 }
 
