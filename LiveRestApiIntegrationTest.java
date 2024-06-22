@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -134,6 +135,7 @@ public class LiveRestApiIntegrationTest {
                 .andExpect(jsonPath("$.location").value("NEW LOCATION"));
     }
 
+
     @Test
     @DataSet(value = "datasets/live.yml")
     @Transactional
@@ -153,8 +155,8 @@ public class LiveRestApiIntegrationTest {
         // レスポンスの内容を文字列として取得し,エラーメッセージが含まれていることを確認
         String jsonResponse = response.getContentAsString();
         assertTrue(jsonResponse.contains("Cannot update with the same data"));
-
     }
+
 
     @Test
     @DataSet(value = "datasets/live.yml")
@@ -170,6 +172,36 @@ public class LiveRestApiIntegrationTest {
                                 }
                                 """))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @ExpectedDataSet(value = "datasets/expectedLiveDataAfterDelete.yml", ignoreCols = "id")
+    @Transactional
+    void 指定したidのliveがDBから削除されメッセージが返ること() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/live/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                          "message": "live deleted"
+                        }
+                        """));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/live/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 存在しないliveのidを削除したとき404とメッセージを返すこと() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/live/6"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                          "message": "That live id cannot be deleted"
+                        }
+                        """));
     }
 }
 

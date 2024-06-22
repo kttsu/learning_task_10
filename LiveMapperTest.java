@@ -2,6 +2,7 @@ package com.tsuchiya.live;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.spring.api.DBRider;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,17 @@ public class LiveMapperTest {
         // id = 2 のliveを、id = 1 と同じデータに更新しようとする
         boolean isDuplicate = liveMapper.isDuplicate("2024-05-09 19:00:00", "Yngwie J.Malmsteen", "zepp namba", 2);
         assertThat(isDuplicate).isTrue();
+    }
+
+    @Test
+    @DataSet(value = "datasets/live.yml")
+    @Transactional
+    void 指定したidでliveの情報を削除できること() {
+        Integer id = 1;
+        liveMapper.delete(id);
+
+        Optional<Live> liveOptional = liveMapper.findById(id);
+        Assertions.assertTrue(liveOptional.isEmpty());
     }
 }
 
