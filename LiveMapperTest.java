@@ -2,6 +2,7 @@ package com.tsuchiya.live;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.spring.api.DBRider;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,7 @@ public class LiveMapperTest {
         liveMapper.delete(id);
 
         Optional<Live> liveOptional = liveMapper.findById(id);
+        Assertions.assertTrue(liveOptional.isEmpty());
     }
 }
 
