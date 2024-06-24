@@ -7,7 +7,7 @@ RaiseTech 24年11月度 最終課題Spring Boot RestAPIのCRUDアプリケーシ
 READ・CREATE・UPDATE・DELETE機能を実装。  
 単体テスト、結合テストを実装し、GitHub ActionsでのCIも実装予定。
 
----
+
 <details>
 <summary><h4>アプリケーション概要図</h4></summary>
 
