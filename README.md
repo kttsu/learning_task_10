@@ -31,7 +31,7 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 | 全件取得 | live一覧を返す | /live |
 | 絞り込み検索 | idを指定して検索 | /live/{id} |
 | 新規登録 | 新しいliveを登録する | /live |
-| liveの編集 | 指定したidのliveを変更する | /live/{id} |
+| liveの更新 | 指定したidのliveを変更する | /live/{id} |
 | 削除 | 指定したidのliveを削除する | /live/{id} |
 
 ---
