@@ -17,7 +17,7 @@ public class LiveController {
         this.liveService = liveService;
     }
 
-    @PostMapping("/live")
+    @PostMapping
     public ResponseEntity<LiveResponse> insert(@RequestBody LiveRequest liveRequest, UriComponentsBuilder uriBuilder) {
         Live live = liveService.insert(liveRequest.getSchedule(), liveRequest.getName(), liveRequest.getLocation());
         URI location = uriBuilder.path("/live/{id}").buildAndExpand(live.getId()).toUri();
