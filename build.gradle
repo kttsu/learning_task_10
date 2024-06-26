@@ -28,13 +28,4 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-
-    reports {
-        junitXml.required.set(true)  // junitXml.enabled の代わりに使用
-        junitXml.outputLocation.set(file("$buildDir/test-results/test"))  // 出力先の設定
-    }
-
-    doLast {
-        println "Test results available at: ${reports.junitXml.outputLocation.get()}"
-    }
 }
