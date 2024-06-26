@@ -35,7 +35,7 @@ jobs:
       run: ./gradlew test --info
 
     - name: List test results for debug
-      run: ls -R build
+      run: ls -R build/test-results/test
 
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v3
