@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tsuchiya.live.LiveMapperTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-06-23T10:23:37" hostname="DESKTOP-9R0VUCS" time="1.78">
+  <properties/>
+  <testcase name="liveを新規登録できること()" classname="com.tsuchiya.live.LiveMapperTest" time="1.78"/>
+  <system-out><![CDATA[19:23:36.501 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.tsuchiya.live.LiveMapperTest]: LiveMapperTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:23:36.672 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.tsuchiya.live.LiveApplication for test class com.tsuchiya.live.LiveMapperTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.4)
+
+2024-06-23T19:23:37.056+09:00  INFO 10896 --- [live] [    Test worker] com.tsuchiya.live.LiveMapperTest         : Starting LiveMapperTest using Java 21.0.1 with PID 10896 (started by kanami in C:\Users\kanami\git\raisetech assignment\live)
+2024-06-23T19:23:37.058+09:00  INFO 10896 --- [live] [    Test worker] com.tsuchiya.live.LiveMapperTest         : No active profile set, falling back to 1 default profile: "default"
+2024-06-23T19:23:37.845+09:00  INFO 10896 --- [live] [    Test worker] com.tsuchiya.live.LiveMapperTest         : Started LiveMapperTest in 1.084 seconds (process running for 2.23)
+2024-06-23T19:23:37.878+09:00  INFO 10896 --- [live] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-23T19:23:38.406+09:00  INFO 10896 --- [live] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@418f890f
+2024-06-23T19:23:38.410+09:00  INFO 10896 --- [live] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-23T19:23:39.423+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'schema' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+2024-06-23T19:23:39.423+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'prologTimeout' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+2024-06-23T19:23:39.423+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'replacers' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+2024-06-23T19:23:39.427+09:00  INFO 10896 --- [live] [    Test worker] c.g.d.r.c.dataset.DataSetExecutorImpl    : DBUnit configuration for dataset executor 'default':cacheConnection: false
+cacheTableNames: false
+caseInsensitiveStrategy: LOWERCASE
+columnSensing: false
+leakHunter: false
+mergeDataSets: false
+mergingStrategy: METHOD
+disableSequenceFiltering: false
+alwaysCleanBefore: false
+alwaysCleanAfter: false
+raiseExceptionOnCleanUp: false
+disablePKCheckFor: com.github.database.rider.core.configuration.DBUnitConfig@43d5822d
+schema: live_database
+tableType: [TABLE]
+allowEmptyFields: false
+fetchSize: 100
+qualifiedTableNames: false
+prologTimeout: 1000
+batchSize: 100
+batchedStatements: false
+caseSensitiveTableNames: false
+replacers: [com.github.database.rider.core.replacers.DateTimeReplacer@2b9d4b0, com.github.database.rider.core.replacers.UnixTimestampReplacer@4f541e67, com.github.database.rider.core.replacers.NullReplacer@2be50bba]
+
+2024-06-23T19:23:39.615+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'schema' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+2024-06-23T19:23:39.615+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'prologTimeout' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+2024-06-23T19:23:39.615+09:00  INFO 10896 --- [live] [    Test worker] org.dbunit.database.DatabaseConfig       : The property ending with 'replacers' was not found. Please notify a dbunit developer to add the property to the class org.dbunit.database.DatabaseConfig
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\kanami\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.12\be4984cb6fd1ef1d11f218a648889dfda44b8a15\byte-buddy-agent-1.14.12.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
