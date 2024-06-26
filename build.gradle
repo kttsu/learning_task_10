@@ -29,4 +29,14 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 
+    reports {
+        junitXml.enabled = true
+        junitXml.destination = file("$buildDir/test-results/test")  
+    }
+
+    doLast {
+        println "Test results available at: ${reports.junitXml.destination}"
+    }
+}
+
 }
