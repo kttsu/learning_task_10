@@ -38,5 +38,3 @@ tasks.named('test') {
         println "Test results available at: ${reports.junitXml.destination}"
     }
 }
-
-}
