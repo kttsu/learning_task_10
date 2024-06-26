@@ -30,8 +30,13 @@ tasks.named('test') {
     useJUnitPlatform()
 
     reports {
-        junitXml.required.set(true) 
-        junitXml.outputLocation.set(file("$buildDir/test-results/test")) 
+        junitXml.required.set(true)
+        junitXml.outputLocation.set(file("$buildDir/test-results/test"))
+    }
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        showStandardStreams = true
     }
 
     doLast {
