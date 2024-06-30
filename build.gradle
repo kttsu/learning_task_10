@@ -34,15 +34,15 @@ tasks.named('test') {
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java']
+            srcDirs = ['src/main/java/com/tsuchiya/live']
         }
         resources {
-            srcDirs = ['src/main/resources']
+            srcDirs = ['src/main/java/resources']
         }
     }
     test {
         java {
-            srcDirs = ['src/test/java']
+            srcDirs = ['src/test/java/com/tsuchiya/live']
         }
         resources {
             srcDirs = ['src/test/resources']
