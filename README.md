@@ -11,7 +11,7 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 <details>
 <summary><h4>アプリケーション概要図</h4></summary>
 
-![Image](https://github.com/user-attachments/assets/62a4bcaf-bbbd-4070-92f6-90eb5508bd59)
+![Image](https://github.com/user-attachments/assets/7285367f-9238-4ecd-b434-b31e5c246dc0)
 </details>
 
 ---
